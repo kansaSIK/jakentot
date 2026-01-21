@@ -1,0 +1,586 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <title>Forum Diskusi</title>
+    <style>
+      
+        :root {
+            --sidebar-width: 280px;
+            --primary-color: #6a11cb;
+            --primary-text-color: #333;
+            --card-background: #ffffff;
+            --bg-color: #f5f7fa;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--primary-text-color);
+            line-height: 1.6;
+            /* Hapus padding body agar sidebar full height tidak terganggu */
+            padding: 0; 
+        }
+
+        
+        .container {
+            max-width: 800px;
+            margin: 20px auto; /* Margin auto biar tengah */
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            position: relative; /* Agar z-index bekerja benar */
+        }
+
+    
+        .menu-backdrop {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 998; /* Di bawah sidebar, di atas konten */
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .sidebar {
+            position: fixed;
+            top: 0;
+            /* Default: Sembunyi di kiri layar */
+            left: calc(-1 * var(--sidebar-width)); 
+            width: var(--sidebar-width);
+            height: 100%;
+            background-color: var(--card-background);
+            box-shadow: 4px 0 15px rgba(0, 0, 0, 0.1);
+            z-index: 999; /* Paling atas */
+            transition: left 0.3s ease-in-out;
+            padding: 0; /* Padding diatur di dalam anak elemen */
+            overflow-y: auto;
+        }
+
+
+        .sidebar-header {
+            height: 80px; /* Disamakan dengan tinggi header biru */
+            display: flex;
+            align-items: center;
+            padding: 0 25px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .sidebar-header h3 {
+            margin: 0;
+            font-size: 20px;
+            font-weight: 700;
+            color: #333;
+        }
+
+        /* Menu Sidebar */
+        .sidebar-menu {
+            list-style: none;
+            padding: 20px;
+        }
+
+        .sidebar-menu li {
+            margin-bottom: 10px;
+        }
+
+        .sidebar-menu a {
+            display: flex;
+            align-items: center;
+            padding: 12px 15px;
+            text-decoration: none;
+            color: #555;
+            font-weight: 500;
+            border-radius: 8px;
+            transition: all 0.2s;
+        }
+
+        .sidebar-menu a:hover {
+            background-color: #f0f2f5;
+            color: var(--primary-color);
+            padding-left: 20px; /* Efek geser sedikit saat hover */
+        }
+
+        .sidebar-menu i {
+            margin-right: 15px;
+            width: 25px; /* Lebar fix biar teks sejajar */
+            text-align: center;
+        }
+
+    
+        #menu-toggle:checked ~ .sidebar {
+            left: 0;
+        }
+
+        #menu-toggle:checked ~ .menu-backdrop {
+            opacity: 1;
+            visibility: visible;
+        }
+
+
+        header {
+            background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
+            color: white;
+            padding: 20px;
+            position: relative;
+            height: auto;
+            min-height: 80px; /* Tinggi minimal */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .menu-icon {
+            position: absolute;
+            left: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: white;
+            font-size: 24px;
+            cursor: pointer;
+            z-index: 10;
+        }
+        
+        .back-button {
+            position: absolute;
+            left: 60px; /* Digeser karena ada menu icon */
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+        }
+
+        .back-button:hover {
+            background: rgba(255, 255, 255, 0.3);
+        }
+
+        .back-button svg {
+            width: 20px;
+            height: 20px;
+        }
+
+        .header-content {
+            text-align: center;
+            width: 100%;
+        }
+
+        header h1 {
+            font-size: 24px;
+            margin-bottom: 5px;
+        }
+
+        header p {
+            font-size: 14px;
+            opacity: 0.9;
+        }
+
+        /* --- FORM POSTING --- */
+        .post-form {
+            padding: 20px;
+            border-bottom: 1px solid #eee;
+            background-color: #fafafa;
+        }
+
+        .post-form textarea {
+            width: 100%;
+            min-height: 80px;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            resize: vertical;
+            font-size: 15px;
+            margin-bottom: 10px;
+            outline: none;
+        }
+        
+        .post-form textarea:focus {
+            border-color: var(--primary-color);
+        }
+
+        .post-form button {
+            background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
+            color: white;
+            border: none;
+            padding: 10px 25px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 600;
+            transition: transform 0.2s, box-shadow 0.2s;
+            float: right; /* Tombol di kanan */
+        }
+        
+        .post-form::after {
+            content: "";
+            display: table;
+            clear: both;
+        }
+
+        .post-form button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 10px rgba(106, 17, 203, 0.3);
+        }
+
+        .posts-container {
+            padding: 20px;
+            min-height: 300px;
+        }
+
+        .post {
+            background-color: white;
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 20px; /* Jarak antar post */
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+            border: 1px solid #eee;
+            border-left: 4px solid #6a11cb;
+        }
+
+        .post-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 12px;
+            align-items: center;
+        }
+
+        .post-author {
+            font-weight: 700;
+            color: #333;
+            font-size: 16px;
+        }
+
+        .post-time {
+            color: #888;
+            font-size: 12px;
+        }
+
+        .post-content {
+            margin-bottom: 15px;
+            color: #444;
+            line-height: 1.6;
+        }
+        
+        .user-id {
+            font-size: 11px;
+            color: #aaa;
+            margin-bottom: 10px;
+        }
+
+        .post-actions {
+            display: flex;
+            gap: 15px;
+            border-top: 1px solid #f5f5f5;
+            padding-top: 10px;
+        }
+
+        .post-action {
+            background: none;
+            border: none;
+            color: #666;
+            cursor: pointer;
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            padding: 5px 10px;
+            border-radius: 5px;
+            transition: all 0.2s;
+        }
+
+        .post-action:hover {
+            background-color: #f0f4ff;
+            color: var(--primary-color);
+        }
+
+        .like-btn.liked {
+            color: #e53935;
+        }
+        .like-btn.liked svg {
+            fill: #e53935;
+        }
+
+        /* Reply Section */
+        .reply-form {
+            margin-top: 15px;
+            display: none;
+            padding-top: 15px;
+            border-top: 1px solid #eee;
+        }
+
+        .replies {
+            margin-top: 15px;
+            padding-left: 20px;
+            border-left: 2px solid #eee;
+        }
+        
+        .reply {
+            background-color: #f9f9f9;
+            padding: 10px 15px;
+            border-radius: 8px;
+            margin-top: 10px;
+        }
+        
+        .reply-header {
+            display: flex;
+            justify-content: space-between;
+            font-size: 12px;
+            margin-bottom: 5px;
+        }
+        
+        .reply-author { font-weight: bold; color: #555; }
+
+        .delete-confirm {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            justify-content: center;
+            align-items: center;
+            z-index: 2000; /* Paling atas banget */
+        }
+
+        .confirm-box {
+            background-color: white;
+            padding: 25px;
+            border-radius: 10px;
+            width: 90%;
+            max-width: 400px;
+            text-align: center;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.2);
+        }
+        
+        .confirm-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 20px;
+        }
+        
+        .confirm-buttons button {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+        
+        .confirm-yes { background-color: #e74c3c; color: white; }
+        .confirm-no { background-color: #e0e0e0; color: #333; }
+
+        /* Responsiveness */
+        @media (max-width: 600px) {
+            .container { margin: 0; border-radius: 0; }
+            .back-button { left: 50px; width: 35px; height: 35px; }
+            header h1 { font-size: 20px; }
+            .menu-icon { left: 15px; }
+        }
+    </style>
+</head>
+<body>
+    <input type="checkbox" id="menu-toggle" hidden>
+    <label for="menu-toggle" class="menu-backdrop"></label>
+
+    <aside class="sidebar">
+        <div class="sidebar-header">
+            <h3>Explore Jakarta</h3>
+        </div>
+        <ul class="sidebar-menu">
+            <li>
+                <a href="beranda.html">
+                    <i class="fas fa-home"></i> Beranda
+                </a>
+            </li>
+            <li>
+                <a href="#">
+                    <i class="fas fa-user-circle"></i> Akun
+                </a>
+            </li>
+            <li>
+                <a href="#">
+                    <i class="fas fa-history"></i> Riwayat
+                </a>
+            </li>
+            <li>
+                <a href="#">
+                    <i class="fas fa-map-marker-alt"></i> Peta
+                </a>
+            </li>
+            <li>
+                <a href="#">
+                    <i class="fas fa-cog"></i> Pengaturan
+                </a>
+            </li>
+        </ul>
+    </aside>
+
+    <div class="container">
+        <header>
+            <label for="menu-toggle" class="menu-icon">
+                <i class="fas fa-bars"></i>
+            </label>
+
+            <a href="beranda.html" class="back-button" title="Kembali ke Beranda">
+                <svg viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/>
+                </svg>
+            </a>
+            <div class="header-content">
+                <h1>Forum Diskusi</h1>
+                <p>Berbagi pendapat dengan pengguna lain</p>
+            </div>
+        </header>
+
+        <div class="post-form">
+            <textarea id="newPostContent" placeholder="Apa yang sedang Anda pikirkan tentang Jakarta?"></textarea>
+            <button id="submitPost">Kirim Postingan</button>
+        </div>
+
+        <div class="posts-container" id="postsContainer">
+            </div>
+    </div>
+
+    <div class="delete-confirm" id="deleteConfirm">
+        <div class="confirm-box">
+            <h3>Hapus Postingan?</h3>
+            <p>Apakah Anda yakin? Tindakan ini tidak dapat dibatalkan.</p>
+            <div class="confirm-buttons">
+                <button class="confirm-yes" id="confirmYes">Ya, Hapus</button>
+                <button class="confirm-no" id="confirmNo">Batal</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        
+        let posts = [{id: 1, author: "Admin", content: "Selamat datang di Forum Diskusi Jakarta!", timestamp: "Sekarang", userId: "admin-01", likes: 5, liked: false, replies: []}];
+        const postsContainer = document.getElementById('postsContainer');
+        const newPostContent = document.getElementById('newPostContent');
+        const submitPost = document.getElementById('submitPost');
+        const deleteConfirm = document.getElementById('deleteConfirm');
+        const confirmYes = document.getElementById('confirmYes');
+        const confirmNo = document.getElementById('confirmNo');
+        let postToDelete = null;
+
+        loadPostsFromStorage();
+
+        function renderPosts() {
+            postsContainer.innerHTML = '';
+            if (posts.length === 0) {
+                postsContainer.innerHTML = '<div class="no-posts" style="text-align:center; padding:20px; color:#999;">Belum ada postingan.</div>';
+                return;
+            }
+            posts.forEach(post => {
+                const postElement = document.createElement('div');
+                postElement.className = 'post';
+                postElement.dataset.id = post.id;
+                postElement.innerHTML = `
+                    <div class="post-header">
+                        <div class="post-author">${post.author}</div>
+                        <div class="post-time">${post.timestamp}</div>
+                    </div>
+                    <div class="post-content">${post.content}</div>
+                    <div class="post-actions">
+                        <button class="post-action like-btn ${post.liked ? 'liked' : ''}">
+                            <i class="fas fa-heart"></i> Suka (${post.likes})
+                        </button>
+                        <button class="post-action reply-btn"><i class="fas fa-reply"></i> Balas</button>
+                        <button class="post-action delete-btn"><i class="fas fa-trash"></i> Hapus</button>
+                    </div>
+                    <div class="reply-form">
+                        <textarea placeholder="Tulis balasan..."></textarea>
+                        <button class="submit-reply" style="margin-top:5px; background:#6a11cb; color:white; border:none; padding:5px 10px; border-radius:4px; cursor:pointer;">Kirim</button>
+                    </div>
+                `;
+                postsContainer.appendChild(postElement);
+            });
+
+            // Re-attach Event Listeners
+            document.querySelectorAll('.delete-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    postToDelete = parseInt(this.closest('.post').dataset.id);
+                    deleteConfirm.style.display = 'flex';
+                });
+            });
+            document.querySelectorAll('.like-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const id = parseInt(this.closest('.post').dataset.id);
+                    const post = posts.find(p => p.id === id);
+                    if(post) {
+                        post.liked = !post.liked;
+                        post.likes += post.liked ? 1 : -1;
+                        savePostsToStorage();
+                        renderPosts();
+                    }
+                });
+            });
+            document.querySelectorAll('.reply-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const form = this.closest('.post').querySelector('.reply-form');
+                    form.style.display = form.style.display === 'block' ? 'none' : 'block';
+                });
+            });
+        }
+
+        function savePostsToStorage() { localStorage.setItem('forumPosts', JSON.stringify(posts)); }
+        function loadPostsFromStorage() { 
+            const saved = localStorage.getItem('forumPosts');
+            if (saved) posts = JSON.parse(saved);
+        }
+
+        submitPost.addEventListener('click', function() {
+            const content = newPostContent.value.trim();
+            if (content) {
+                posts.unshift({
+                    id: Date.now(),
+                    author: "Anda",
+                    content: content,
+                    timestamp: new Date().toLocaleString(),
+                    userId: "user-" + Math.floor(Math.random()*1000),
+                    likes: 0,
+                    liked: false,
+                    replies: []
+                });
+                savePostsToStorage();
+                renderPosts();
+                newPostContent.value = '';
+            }
+        });
+
+        confirmYes.addEventListener('click', function() {
+            if (postToDelete) {
+                posts = posts.filter(p => p.id !== postToDelete);
+                savePostsToStorage();
+                renderPosts();
+                deleteConfirm.style.display = 'none';
+            }
+        });
+        confirmNo.addEventListener('click', () => deleteConfirm.style.display = 'none');
+    </script>
+</body>
+</html>
