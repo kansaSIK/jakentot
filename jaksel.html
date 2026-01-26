@@ -488,7 +488,7 @@
             gap: 10px;
             color: var(--text-light);
             font-size: 15px;
-            margin-bottom: 15px;
+            margin-bottom: 9px;
         }
 
         .card-location i {
@@ -529,18 +529,23 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding-top: 25px;
+            padding-top: 10px;
             border-top: 1px solid var(--pastel-beige);
             margin-top: auto;
+            gap: 10px;
         }
 
         /* Tombol Lihat Peta */
         .card-action {
             display: flex;
-            align-items: center;
-            gap: 8px;
+            align-items: right;
+            gap:10px;
         }
 
+        .card-action button {
+            font-size: 9px;
+        }
+        
         .map-link {
             display: inline-flex;
             align-items: center;
@@ -875,12 +880,12 @@
             
             .card-footer {
                 flex-direction: column;
-                gap: 15px;
+                gap: 10px;
                 align-items: stretch;
             }
             
             .card-action {
-                justify-content: center;
+                justify-content: right;
             }
         }
 
@@ -972,12 +977,12 @@
             <div class="nav-actions">
                 <div class="search-bar">
                     <i class="fas fa-search"></i>
-                    <input type="text" placeholder="Cari tempat di Jakarta Pusat..." id="search-input">
+                    <input type="text" placeholder="Cari tempat di Jakarta Selatan..." id="search-input">
                 </div>
                 
                 <a href="index.html" class="back-button">
                     <i class="fas fa-arrow-left"></i>
-                    Kembali ke Beranda
+                    Kembali
                 </a>
                 
                 <div class="wishlist-counter">
@@ -1023,7 +1028,7 @@
                 <i class="fas fa-star"></i> Semua Tempat
             </a>
              <a href="wishlist.html" class="category-wish  ">
-                <i class="fas fa-map-marked-alt"></i> Explore Tempat
+                <i class="fas fa-map-marked-alt"></i> Explore List
             </a>
         
         </div>
@@ -1033,30 +1038,25 @@
         <div id="no-results-message" class="no-results">
             <i class="fas fa-search"></i>
             <h3>Tempat Tidak Ditemukan</h3>
-            <p>Maaf, tempat yang kamu cari tidak ditemukan di Jakarta Pusat. Coba kata kunci lain atau jelajahi rekomendasi kami.</p>
-            <a href="#" class="wishlist-btn" style="margin-top: 20px;">
-                <i class="fas fa-compass"></i> Lihat Semua Tempat
-            </a>
+            <p>Maaf, tempat yang kamu cari tidak ditemukan di Jakarta Selatan. Coba kata kunci lain atau jelajahi rekomendasi kami.</p>
         </div>
 
         <!-- Ikon Kota Section -->
         <section class="iconic-places">
             <div class="section-header">
                 <h2>Ikon Kota Jakarta Selatan</h2>
-                <a href="#" class="view-all">
-                    Lihat Semua Ikon <i class="fas fa-arrow-right"></i>
-                </a>
+                
             </div>
             
             <div class="cards-container" id="iconic-container">
                 <!-- Card 1: Monas -->
-                <div class="card" data-location="Monas">
+                <div class="card" data-location="Blok M">
                     <div class="card-image">
-                        <img src="https://placehold.co/600x400/F1EAE0/A88B6F?text=Monas+Jakarta" alt="Monumen Nasional" onerror="this.onerror=null;this.src='https://placehold.co/600x400/F1EAE0/A88B6F?text=Monas+Jakarta'">
+                        <img src="Blok m (2).jpg" alt="blokm" onerror="this.onerror=null;this.src='https://placehold.co/600x400/F1EAE0/A88B6F?text=Monas+Jakarta'">
                         <div class="card-overlay"></div>
-                        <div class="card-tag">Ikon Nasional</div>
+                        <div class="card-tag">Culinary</div>
                         <div class="district-badge">
-                            <i class="fas fa-map-pin"></i> Gambir
+                            <i class="fas fa-map-pin"></i> Blok M
                         </div>
                     </div>
                     <div class="card-content">
@@ -1076,11 +1076,11 @@
                         </div>
                         <div class="card-footer">
                             <div class="card-action">
-                                <a href="https://maps.google.com/?q=Monumen+Nasional+Jakarta" target="_blank" class="map-link">
+                                <a href="https://maps.app.goo.gl/TuvAAVKkncWSr2AbA" target="_blank" class="map-link">
                                     <i class="fas fa-map-marked-alt"></i> Lihat Peta
                                 </a>
                             </div>
-                            <button class="wishlist-btn" data-place="Monumen Nasional" data-location="Jl. Silang Monas, Gambir" data-image="https://placehold.co/600x400/F1EAE0/A88B6F?text=Monas+Jakarta" data-description="Tugu peringatan setinggi 132 meter yang menjadi simbol kebanggaan Jakarta. Nikmati pemandangan kota dari puncak monas dan pelajari sejarah Indonesia di museum bawah tanah." data-category="Ikon Nasional">
+                            <button class="wishlist-btn" data-place="Blok M" data-location="Jl. Silang Monas, Gambir" data-image="https://placehold.co/600x400/F1EAE0/A88B6F?text=Monas+Jakarta" data-description="Tugu peringatan setinggi 132 meter yang menjadi simbol kebanggaan Jakarta. Nikmati pemandangan kota dari puncak monas dan pelajari sejarah Indonesia di museum bawah tanah." data-category="Ikon Nasional">
                                 <i class="fas fa-plus"></i> Tambah ke Wishlist
                             </button>
                         </div>
@@ -1088,17 +1088,17 @@
                 </div>
                 
                 <!-- Card 2: Bundaran HI -->
-                <div class="card" data-location="Bundaran HI">
+                <div class="card" data-location="setu">
                     <div class="card-image">
-                        <img src="https://placehold.co/600x400/F1EAE0/A88B6F?text=Bundaran+HI" alt="Bundaran Hotel Indonesia" onerror="this.onerror=null;this.src='https://placehold.co/600x400/F1EAE0/A88B6F?text=Bundaran+HI'">
+                        <img src="M Bloc, Jakarta.jpg" alt="setu" onerror="this.onerror=null;this.src='https://placehold.co/600x400/F1EAE0/A88B6F?text=Bundaran+HI'">
                         <div class="card-overlay"></div>
-                        <div class="card-tag">Landmark Kota</div>
+                        <div class="card-tag">jaksel</div>
                         <div class="district-badge">
-                            <i class="fas fa-map-pin"></i> Thamrin
+                            <i class="fas fa-map-pin"></i> 
                         </div>
                     </div>
                     <div class="card-content">
-                        <h3>Setu Bababkan</h3>
+                        <h3>Setu Babakan</h3>
                         <div class="card-location">
                             <i class="fas fa-map-marker-alt"></i>
                             <span>Setu Babakan, Kel. Srengseng Sawah, Kec. Jagakrsa, Jakarta Selatan, DKI Jakarta</span>
@@ -1115,7 +1115,7 @@
                         </div>
                         <div class="card-footer">
                             <div class="card-action">
-                                <a href="https://maps.google.com/?q=Bundaran+Hotel+Indonesia+Jakarta" target="_blank" class="map-link">
+                                <a href="https://maps.app.goo.gl/6B5KRTQ99B82puvE9" target="_blank" class="map-link">
                                     <i class="fas fa-map-marked-alt"></i> Lihat Peta
                                 </a>
                             </div>
@@ -1127,13 +1127,13 @@
                 </div>
                 
                 <!-- Card 3: Plaza Indonesia -->
-                <div class="card" data-location="Plaza Indonesia">
+                <div class="card" data-location="PIM">
                     <div class="card-image">
-                        <img src="https://placehold.co/600x400/F1EAE0/A88B6F?text=Plaza+Indonesia" alt="Plaza Indonesia" onerror="this.onerror=null;this.src='https://placehold.co/600x400/F1EAE0/A88B6F?text=Plaza+Indonesia'">
+                        <img src="kopinako.jpeg" alt="Pondok Indah Mall" onerror="this.onerror=null;this.src='https://placehold.co/600x400/F1EAE0/A88B6F?text=Plaza+Indonesia'">
                         <div class="card-overlay"></div>
                         <div class="card-tag">Luxury Shopping</div>
                         <div class="district-badge">
-                            <i class="fas fa-map-pin"></i> Thamrin
+                            <i class="fas fa-map-pin"></i>PIM
                         </div>
                     </div>
                     <div class="card-content">
@@ -1153,7 +1153,7 @@
                         </div>
                         <div class="card-footer">
                             <div class="card-action">
-                                <a href="https://maps.google.com/?q=Plaza+Indonesia+Jakarta" target="_blank" class="map-link">
+                                <a href="https://maps.app.goo.gl/cs9CyYLandhcsJWr5" target="_blank" class="map-link">
                                     <i class="fas fa-map-marked-alt"></i> Lihat Peta
                                 </a>
                             </div>
@@ -1166,31 +1166,10 @@
             </div>
         </section>
 
-        <!-- Highlight Section -->
-        <div class="highlight-section">
-            <div class="highlight-content">
-                <div class="highlight-icon">
-                    <i class="fas fa-crown"></i>
-                </div>
-                <h3 class="highlight-title">Pusat Pemerintahan Indonesia</h3>
-                <p class="highlight-text">
-                    Jakarta Pusat adalah rumah bagi Istana Merdeka, kantor pemerintahan, 
-                    dan institusi penting negara. Jelajahi sejarah dan kebudayaan Indonesia 
-                    melalui monumen, museum, dan bangunan bersejarah di kawasan ini.
-                </p>
-                <a href="#" class="wishlist-btn">
-                    <i class="fas fa-map-marked-alt"></i> Jelajahi Peta Jakarta Pusat
-                </a>
-            </div>
-        </div>
-
         <!-- Wisata Sejarah Section -->
         <section class="historical-places">
             <div class="section-header">
                 <h2>Wisata Sejarah & Museum</h2>
-                <a href="#" class="view-all">
-                    Lihat Semua Museum <i class="fas fa-arrow-right"></i>
-                </a>
             </div>
             
             <div class="cards-container" id="historical-container">
