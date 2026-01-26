@@ -280,6 +280,8 @@
             padding-bottom: 10px;
             -ms-overflow-style: none;
             scrollbar-width: none;
+            scroll-behavior: smooth; 
+          
         }
 
 
@@ -605,10 +607,7 @@
         display: none !important;
     }
     
-    /* Hide popup on mobile */
-    .card-popup {
-        display: none !important;
-    }
+
 
      section {
             margin-bottom: 30px;
