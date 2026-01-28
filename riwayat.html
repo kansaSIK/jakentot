@@ -140,7 +140,78 @@
                     renderHistory(); 
                 }
             });
+
+            
+            
         });
+
+        function openJakartaMapSimple() {
+    // Konfirmasi sebelum membuka peta
+    if (confirm('Anda akan dibuka ke Google Maps. Lanjutkan?')) {
+        // Koordinat Jakarta
+        const lat = -6.2088;
+        const lng = 106.8456;
+        
+        // URL Google Maps
+        const mapsUrl = `https://www.google.com/maps?q=${lat},${lng}&z=13`;
+        
+        // Buka di tab baru
+        window.open(mapsUrl, '_blank', 'noopener,noreferrer');
+    }
+}
+
+// Pasang event listener ke link "Jelajahi Peta"
+document.addEventListener('DOMContentLoaded', function() {
+    const mapLinks = document.querySelectorAll('a');
+    mapLinks.forEach(link => {
+        const icon = link.querySelector('i');
+        if (icon && icon.classList.contains('fa-map-marker-alt') && 
+            link.textContent.includes('Jelajahi Peta')) {
+            link.addEventListener('click', function(e) {
+                e.preventDefault();
+                openJakartaMapSimple();
+            });
+        }
+    });
+});
+
+document.addEventListener("DOMContentLoaded", function() {
+    const modal = document.getElementById("mobile-modal-container");
+    const modalBody = document.getElementById("modal-body");
+    const closeBtn = document.querySelector(".close-modal");
+    const cards = document.querySelectorAll(".card");
+
+    cards.forEach(card => {
+        card.addEventListener("click", function(e) {
+            // Jalankan hanya di tampilan HP
+            if (window.innerWidth <= 768) {
+                // Ambil konten dari popup asli di dalam kartu
+                const popupContent = this.querySelector(".card-popup").innerHTML;
+                
+                // Masukkan ke dalam modal utama
+                modalBody.innerHTML = popupContent;
+                
+                // Tampilkan modal
+                modal.style.display = "block";
+                
+                // Mencegah scroll pada background
+                document.body.style.overflow = "hidden";
+            }
+        });
+    });
+
+    // Fungsi Tutup
+    function closeModal() {
+        modal.style.display = "none";
+        document.body.style.overflow = "auto";
+    }
+
+    closeBtn.onclick = closeModal;
+    window.onclick = (event) => { if (event.target == modal) closeModal(); };
+});
+
+       
+
     </script>
 </body>
 </html>
