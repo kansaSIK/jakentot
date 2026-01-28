@@ -612,7 +612,6 @@ h2 {
         cursor: pointer;
         color: var(--primary-text-color);
     }
-
     
 }
 
@@ -668,7 +667,7 @@ h2 {
 
 /* Optional: Add swipe indicator for better UX */
 .cards-container::after {
-  
+    content: '← swipe →';
     position: absolute;
     top: 10px;
     right: 15px;
