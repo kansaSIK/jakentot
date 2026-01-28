@@ -173,8 +173,7 @@ function checkMobileLayout() {
         const cardsContainer = document.querySelector('.cards-container');
         if (cardsContainer) {
             cardsContainer.style.cssText = `
-                display: grid !important;
-                grid-template-columns: 1fr !important;
+               
                 gap: 15px !important;
                 padding: 0 5px !important;
             `;
@@ -184,7 +183,7 @@ function checkMobileLayout() {
         const cards = document.querySelectorAll('.card');
         cards.forEach(card => {
             card.style.cssText = `
-                width: 100% !important;
+               
                 margin: 0 !important;
                 border-radius: 12px !important;
                 overflow: hidden !important;
