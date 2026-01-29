@@ -885,41 +885,88 @@
             }
         }
 
-        @media (max-width: 480px) {
-            .header-section {
-                padding: 25px 20px;
-            }
-            
-            .header-title {
-                font-size: 28px;
-            }
-            
-            .header-badge {
-                padding: 6px 16px;
-                font-size: 13px;
-            }
-            
-            .category-chip {
-                padding: 10px 20px;
-                font-size: 13px;
-            }
-            
-            .card-content {
-                padding: 25px;
-            }
-            
-            .wishlist-btn,
-            .map-link {
-                padding: 10px 20px;
-                font-size: 14px;
-            }
-            
-            .feature {
-                padding: 5px 10px;
-                font-size: 12px;
-            }
-        }
+      @media (max-width: 480px) {
+ .main-nav {
+        display: flex;
+        flex-direction: column; 
+        align-items: flex-start; /* Semua elemen mulai dari kiri */
+        padding: 15px;
+        gap: 15px;
+    }
 
+    /* 2. Logo Section: Ikon di kiri, Teks di sampingnya */
+    .logo-section {
+        display: flex;
+        flex-direction: row; /* Ikon dulu baru teks */
+        align-items: center;
+        gap: 10px;
+        width: 100%;
+    }
+
+    /* Ukuran Ikon Logo */
+    .logo {
+        flex-shrink: 0; /* Agar ikon tidak gepeng saat teks panjang */
+        width: 45px;
+        height: 45px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    /* Teks di samping logo */
+    .logo-text {
+        text-align: left;
+    }
+
+    .logo-text h2 {
+        font-size: 1.5rem;
+        margin: 0;
+        line-height: 1.2;
+    }
+
+    .logo-text p {
+        font-size: 0.75rem;
+        margin: 0;
+        color: #666;
+    }
+
+    .search-bar input::placeholder {
+        font-size: 12px; /* Ukuran teks kecil */
+        color: #999;
+    }
+    .back-button {
+        flex: 0;
+        padding: 9px 5px;
+        font-size: 15px;
+        display: flex;
+        justify-content: center;
+       /* Teks tidak turun ke bawah */
+    }
+
+    /* 3. Aksi (Search & Button) agar tidak berantakan */
+    
+
+    /* Merapikan Chip Kategori agar bisa di-scroll horizontal */
+    .category-filter {
+        display: flex;
+        overflow-x: auto;
+        white-space: nowrap;
+        padding: 10px 5px;
+        gap: 10px;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    .category-chip, .category-wish {
+        flex: 0 0 auto; /* Mencegah chip mengecil */
+    }
+
+    /* Merapikan Card agar tidak terlalu lebar */
+    .card {
+        margin: 10px;
+    }
+
+    
+}
         /* Animation for cards */
         @keyframes fadeInUp {
             from {
