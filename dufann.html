@@ -679,48 +679,63 @@
         }
     }
 
-    @media (max-width: 480px) {
-        .detail-header {
-            padding: 20px 15px;
-        }
-        
-        .main-content {
-            padding: 25px 15px;
-        }
-        
-        .hero-image-container {
-            height: 280px;
-        }
-        
-        .venue-description h1 {
-            font-size: 26px;
-        }
-        
-        .wishlist-btn {
-            padding: 14px 24px;
-            width: 100%;
-            justify-content: center;
-        }
-        
-        .highlight-card {
-            flex: 0 0 180px;
-        }
-        
-        .highlight-card img {
-            height: 140px;
-        }
-        
-        .about-section p {
-            font-size: 16px;
-        }
-        
-        .wishlist-notification {
-            top: 20px;
-            right: 20px;
-            left: 20px;
-            max-width: none;
-        }
+   @media screen and (max-width: 480px) {
+  .detail-container .detail-header {
+        display: flex !important;
+        flex-direction: row !important; /* Paksa baris */
+        justify-content: space-between !important;
+        align-items: center !important;
+        gap: 8px !important;
     }
+
+    .detail-container .back-link, 
+    .detail-container .maps-button {
+        flex: 1 !important;
+        font-size: 11px !important;
+        white-space: nowrap !important;
+    }
+
+    .back-link, .maps-button {
+        font-size: 12px !important;
+        padding: 8px 5px !important;
+    }
+
+    .back-link i, .maps-button i {
+        font-size: 11px !important;
+        margin-right: -5px !important;
+    }
+.highlight-cards {
+        display: flex !important; /* Ubah dari grid ke flex */
+        flex-wrap: nowrap !important; /* Paksa tetap satu baris */
+        overflow-x: auto !important; /* Aktifkan scroll horizontal */
+        gap: 12px !important;
+        padding: 5px 2px 15px 2px !important; /* Beri sedikit padding bawah untuk scrollbar */
+        scroll-snap-type: x mandatory; /* Membuat scroll terasa lebih halus/magnetis */
+        -webkit-overflow-scrolling: touch; /* Scroll halus di iPhone */
+    }
+
+    /* Mengatur ukuran kartu agar pas saat berjejer */
+    .highlight-card {
+        flex: 0 0 85% !important; /* Kartu mengambil 85% lebar layar agar kartu berikutnya terlihat sedikit */
+        height: 150px !important; /* Sesuaikan tinggi agar proporsional */
+        scroll-snap-align: center; /* Kartu akan otomatis ke tengah saat di-scroll */
+    }
+
+    /* Sembunyikan scrollbar agar tampilan lebih clean (Opsional) */
+    .highlight-cards::-webkit-scrollbar {
+        display: none;
+    }
+
+    .hero-image-container {
+        height: 180px !important;
+    }
+
+    .venue-description h1 {
+        font-size: 22px !important;
+    }
+}
+
+    
     </style>
 </head>
 
